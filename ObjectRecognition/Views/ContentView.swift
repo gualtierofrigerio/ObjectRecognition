@@ -11,17 +11,27 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Button {
-                showSheet.toggle()
+                showCamera.toggle()
             } label: {
                 Text("scan for objects")
             }
+            .padding()
+            Button {
+                showLibrary.toggle()
+            } label: {
+                Text("open library")
+            }
         }
-        .sheet(isPresented: $showSheet) {
+        .sheet(isPresented: $showCamera) {
             CameraView()
+        }
+        .sheet(isPresented: $showLibrary) {
+            PhotoLibraryView()
         }
     }
     
-    @State private var showSheet = false
+    @State private var showCamera = false
+    @State private var showLibrary = false
 }
 
 struct ContentView_Previews: PreviewProvider {
