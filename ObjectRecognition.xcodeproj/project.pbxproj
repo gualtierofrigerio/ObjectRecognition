@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		257EC09726419A2B00943113 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257EC09626419A2B00943113 /* PhotoPicker.swift */; };
+		257EC0992641A0A900943113 /* PhotoLibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257EC0982641A0A900943113 /* PhotoLibraryViewModel.swift */; };
+		257EC0A22642885700943113 /* ImageOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257EC0A12642885700943113 /* ImageOverlayView.swift */; };
+		257EC0A42642978300943113 /* ImageOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257EC0A32642978300943113 /* ImageOverlayViewController.swift */; };
+		258BEE4226414DCA00228B69 /* PhotoLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258BEE4126414DCA00228B69 /* PhotoLibraryView.swift */; };
+		25B796A0263FE256003077A1 /* OrientationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B7969F263FE256003077A1 /* OrientationUtils.swift */; };
 		25CAF213263845720002C56A /* ObjectRecognitionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CAF212263845720002C56A /* ObjectRecognitionApp.swift */; };
 		25CAF215263845720002C56A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CAF214263845720002C56A /* ContentView.swift */; };
 		25CAF217263845730002C56A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25CAF216263845730002C56A /* Assets.xcassets */; };
@@ -19,6 +25,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		257EC09626419A2B00943113 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
+		257EC0982641A0A900943113 /* PhotoLibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryViewModel.swift; sourceTree = "<group>"; };
+		257EC0A12642885700943113 /* ImageOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageOverlayView.swift; sourceTree = "<group>"; };
+		257EC0A32642978300943113 /* ImageOverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageOverlayViewController.swift; sourceTree = "<group>"; };
+		258BEE4126414DCA00228B69 /* PhotoLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryView.swift; sourceTree = "<group>"; };
+		25B7969F263FE256003077A1 /* OrientationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationUtils.swift; sourceTree = "<group>"; };
 		25CAF20F263845720002C56A /* ObjectRecognition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjectRecognition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25CAF212263845720002C56A /* ObjectRecognitionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectRecognitionApp.swift; sourceTree = "<group>"; };
 		25CAF214263845720002C56A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -48,7 +60,11 @@
 			children = (
 				25CAF22B263966940002C56A /* CameraView.swift */,
 				25CAF214263845720002C56A /* ContentView.swift */,
+				257EC0A12642885700943113 /* ImageOverlayView.swift */,
+				257EC0A32642978300943113 /* ImageOverlayViewController.swift */,
 				25CAF2232638471F0002C56A /* LiveCameraViewController.swift */,
+				258BEE4126414DCA00228B69 /* PhotoLibraryView.swift */,
+				257EC09626419A2B00943113 /* PhotoPicker.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -57,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				25CAF225263858FC0002C56A /* GeometryUtils.swift */,
+				25B7969F263FE256003077A1 /* OrientationUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -68,6 +85,14 @@
 				25CAF227263962090002C56A /* ObjectRecognizer.swift */,
 			);
 			path = CoreML;
+			sourceTree = "<group>";
+		};
+		257EC09A2641A33B00943113 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				257EC0982641A0A900943113 /* PhotoLibraryViewModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		25CAF206263845720002C56A = {
@@ -90,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				25CAF212263845720002C56A /* ObjectRecognitionApp.swift */,
+				257EC09A2641A33B00943113 /* Models */,
 				2509F2CF2639B57B002E0624 /* CoreML */,
 				2509F2CD2639B54D002E0624 /* Views */,
 				2509F2CE2639B569002E0624 /* Utils */,
@@ -183,6 +209,12 @@
 				25CAF215263845720002C56A /* ContentView.swift in Sources */,
 				25CAF213263845720002C56A /* ObjectRecognitionApp.swift in Sources */,
 				25CAF22A2639631C0002C56A /* YOLOv3Tiny.mlmodel in Sources */,
+				257EC0A22642885700943113 /* ImageOverlayView.swift in Sources */,
+				258BEE4226414DCA00228B69 /* PhotoLibraryView.swift in Sources */,
+				25B796A0263FE256003077A1 /* OrientationUtils.swift in Sources */,
+				257EC09726419A2B00943113 /* PhotoPicker.swift in Sources */,
+				257EC0A42642978300943113 /* ImageOverlayViewController.swift in Sources */,
+				257EC0992641A0A900943113 /* PhotoLibraryViewModel.swift in Sources */,
 				25CAF226263858FC0002C56A /* GeometryUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,9 +354,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = it.epress.com.gfrigerio.ObjectRecognition;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gfrigerio.ObjectRecognition;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Epress Provisioning 2021";
+				PROVISIONING_PROFILE_SPECIFIER = Wildcard;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -346,9 +378,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = it.epress.com.gfrigerio.ObjectRecognition;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gfrigerio.ObjectRecognition;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Epress Provisioning 2021";
+				PROVISIONING_PROFILE_SPECIFIER = Wildcard;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
