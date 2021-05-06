@@ -40,6 +40,12 @@ class LiveCameraViewController: UIViewController {
         session?.startRunning()
     }
     
+    override func viewWillLayoutSubviews() {
+        cameraView.frame = view.frame
+        previewLayer?.frame = cameraView.layer.bounds
+        previewLayer?.connection?.videoOrientation = OrientationUtils.videoOrientationForCurrentOrientation()
+    }
+    
     // MARK: - Private
     
     private var cameraView:UIView
@@ -98,33 +104,10 @@ class LiveCameraViewController: UIViewController {
     
     private func drawRecognizedObjects(_ objects:[RecognizedObject]) {
         guard let previewLayer = previewLayer else { return }
-        let color = CGColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 0.4)
+
+        objectsLayer = GeometryUtils.createLayer(forRecognizedObjects: objects,
+                                              inFrame: previewLayer.frame)
         
-        objectsLayer.removeFromSuperlayer()
-        let rectangles = objects.map {
-            VNImageRectForNormalizedRect($0.bounds,
-                                         Int(videoSize.width),
-                                         Int(videoSize.height))
-            //GeometryUtils.transformRect($0.bounds, forFrame: previewLayer.frame)
-        }
-        let
-        
-        objectsLayer = CALayer()
-        objectsLayer.frame = previewLayer.frame
-        var text = ""
-        if let firstText = objects.first?.label {
-            text = firstText
-        }
-        for rect in rectangles {
-            let layer = GeometryUtils.createRectLayerWithBounds(rect, color: color)
-            let textLayer = GeometryUtils.createTextLayerWithBounds(rect, text: text)
-            layer.addSublayer(textLayer)
-            objectsLayer.addSublayer(layer)
-        }
-        
-        GeometryUtils.updateLayerGeometry(parentLayer: previewLayer,
-                                          size: videoSize,
-                                          layerToUpdate: objectsLayer)
         
         previewLayer.addSublayer(objectsLayer)
         previewLayer.setNeedsDisplay()
