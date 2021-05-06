@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import Vision
 
 struct RecognizedObject {
@@ -23,10 +24,26 @@ class ObjectRecognizer {
         loadModel()
     }
     
+    func recognize(fromImage image:UIImage,
+                   completion:@escaping([RecognizedObject]) ->Void ) {
+        guard let cgImage = image.cgImage else {
+            completion([])
+            return
+        }
+        self.completion = completion
+        let imageRequestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        do {
+            try imageRequestHandler.perform(self.requests)
+        }
+        catch {
+            print(error)
+        }
+    }
+    
     func recognize(fromPixelBuffer pixelBuffer:CVImageBuffer,
                    completion:@escaping([RecognizedObject]) ->Void ) {
         self.completion = completion
-        let exifOrientation = GeometryUtils.exifOrientationFromDeviceOrientation()
+        let exifOrientation = OrientationUtils.exifOrientationFromDeviceOrientation()
         
         let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer,
                                                         orientation: exifOrientation,
