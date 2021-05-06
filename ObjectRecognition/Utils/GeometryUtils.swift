@@ -9,6 +9,20 @@ import Foundation
 import UIKit
 
 class GeometryUtils {
+    static func boundingBox(forRecognizedRect: CGRect, imageFrame: CGRect) -> CGRect {
+        var rect = forRecognizedRect
+        
+        rect.origin.x *= imageFrame.width
+        rect.origin.y *= imageFrame.height
+        rect.size.width *= imageFrame.width
+        rect.size.height *= imageFrame.height
+
+        // necessary as the recognized image is flipped vertically
+        rect.origin.y = imageFrame.height - rect.origin.y - rect.size.height
+        
+        return rect
+    }
+    
     static func createRectLayerWithBounds(_ bounds: CGRect, color:CGColor) -> CALayer {
         let shapeLayer = CALayer()
         shapeLayer.bounds = bounds
@@ -18,36 +32,32 @@ class GeometryUtils {
         return shapeLayer
     }
     
-    static func createLayer(forRectangles rectangles:[CGRect],
-                            transformRectangles:Bool,
-                            frameSize:CGRect,
-                            strokeColor:CGColor) -> CALayer {
-        let layer = CAShapeLayer()
-        layer.frame = frameSize
+    static func createLayer(forRecognizedObjects objects:[RecognizedObject],
+                            inFrame frame:CGRect) -> CALayer {
+        let objectsLayer = CALayer()
+        objectsLayer.frame = frame
         
-        var path = UIBezierPath()
-        for rect in rectangles {
-            if transformRectangles {
-                let transformedRect = transformRect(rect, forFrame: frameSize)
-                print("transformed rect \(transformedRect)")
-                path = updatePath(path, withRect: transformedRect)
-            }
-            else {
-                path = updatePath(path, withRect: rect)
-            }
+        let color = CGColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 0.4)
+        
+        for object in objects {
+            let rect = GeometryUtils.boundingBox(forRecognizedRect: object.bounds,
+                                                 imageFrame: frame)
+            
+            let layer = GeometryUtils.createRectLayerWithBounds(rect, color: color)
+
+            let textLayer = GeometryUtils.createTextLayerWithBounds(layer.bounds,
+                                                                    text: object.label)
+            layer.addSublayer(textLayer)
+            objectsLayer.addSublayer(layer)
         }
-        path.close()
-        layer.path = path.cgPath
-        layer.strokeColor = strokeColor
-        layer.fillColor = UIColor.clear.cgColor
         
-        return layer
+        return objectsLayer
     }
     
     static func createTextLayerWithBounds(_ bounds: CGRect, text: String) -> CATextLayer {
         let textLayer = CATextLayer()
         let formattedString = NSMutableAttributedString(string: text)
-        let largeFont = UIFont(name: "Helvetica", size: 24.0)!
+        let largeFont = UIFont(name: "Helvetica", size: 18.0)!
         formattedString.addAttributes([NSAttributedString.Key.font: largeFont], range: NSRange(location: 0, length: text.count))
         textLayer.string = formattedString
         textLayer.bounds = CGRect(x: 0, y: 0, width: bounds.size.height - 10, height: bounds.size.width - 10)
@@ -56,29 +66,23 @@ class GeometryUtils {
         textLayer.shadowOffset = CGSize(width: 2, height: 2)
         textLayer.foregroundColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0.0, 0.0, 0.0, 1.0])
         textLayer.contentsScale = 2.0 // 2.0 for retina display
-        // rotate the layer into screen orientation and scale and mirror
-        textLayer.setAffineTransform(CGAffineTransform(rotationAngle: CGFloat(.pi / 1.0)).scaledBy(x: 1.0, y: -1.0))
         return textLayer
     }
     
-    static func exifOrientationFromDeviceOrientation() -> CGImagePropertyOrientation {
-        let deviceOrientation = UIDevice.current.orientation
-        let returnOrientation: CGImagePropertyOrientation
+    /// works for sizeAspectFit
+    static func imageFrameInView(imageSize:CGSize, viewSize:CGSize) -> CGRect {
+        let widthRatio = imageSize.width / viewSize.width
+        let heightRatio = imageSize.height / viewSize.height
         
-        switch deviceOrientation {
-        case .portrait:
-            returnOrientation = .right
-        case .landscapeLeft:
-            returnOrientation = .down
-        case .landscapeRight:
-            returnOrientation = .up
-        case .portraitUpsideDown:
-            returnOrientation = .left
-        default:
-            returnOrientation = .up
-        }
-
-        return returnOrientation
+        let ratio = max(widthRatio, heightRatio)
+        
+        let imageWidth = imageSize.width / ratio
+        let imageHeight = imageSize.height / ratio
+        
+        let x = (viewSize.width - imageWidth) / 2
+        let y = (viewSize.height - imageHeight) / 2
+        
+        return CGRect(x: x, y: y, width: imageWidth, height: imageHeight)
     }
     
     static func transformRect(_ bounds:CGRect,
